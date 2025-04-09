@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reifegrad Self-Assessment</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script defer src="logik.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <ul class="nav-links">
+                <li><a href="#" data-target="0">Vorwort</a></li>
+                <li><a href="#" data-target="1">Sicherheit</a></li>
+                <li><a href="#" data-target="10">Mitarbeiterschulung</a></li>
+                <li><a href="#" data-target="12">Compliance</a></li>
+            </ul>
+            <div class="navbar-controls">
+                <div class="progress-container">
+                    <div class="progress-text">Fortschritt: <span id="progress">0%</span></div>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                    </div>
+                </div>
+                <button class="save-button" onclick="saveAllAnswers()">Speichern</button>
+                <button class="reset-button" onclick="restartAssessment()">Zurücksetzen</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 id="page-title">Lade Fragen...</h1>
+        <div id="questions-container"></div>
+
+        <div class="navigation">
+            <button id="prev-button" onclick="changePage(currentPage - 1)">Zurück</button>
+            <button id="next-button" onclick="changePage(currentPage + 1)">Weiter</button>
+            <button id="calculate-button" onclick="calculateScore()">Berechnen</button>
+            <button id="finish-button" onclick="finishTest()">Test abschließen</button>
+        </div>
+
+        <div id="results-container" class="results-container" style="display: none;">
+            <h2>Ihre Ergebnisse</h2>
+        
+            <!-- Dropdown-Button Download -->
+            <div class="dropdown">
+                <button class="download-button">Ergebnisse herunterladen</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="downloadResults('json')">Als JSON herunterladen</a>
+                    <a href="#" onclick="downloadResults('csv')">Als CSV herunterladen</a>
+                    <a href="#" onclick="downloadResultsAsPDF()">Als PDF herunterladen</a> <!-- Neuer Button -->
+                </div>
+            </div>
+        
+            <!-- Radar Chart -->
+            <div class="chart-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+        
+            <!-- Tabelle mit Ergebnissen -->
+            <h3>Antworten im Überblick</h3>
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>Kategorie</th>
+                        <th>Reifegrad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Antworten von der umfragee -->
+                </tbody>
+            </table>
+        
+            <!-- Gesamtergebnis -->
+            <h3>Gesamtreifegrad: <span id="total-score">0</span></h3>
+        
+            <!-- Neustart-Button -->
+            <button onclick="restartAssessment()">Neustart</button>
+        </div>
+    </main>
+</body>
+</html>
